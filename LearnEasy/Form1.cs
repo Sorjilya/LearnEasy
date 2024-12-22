@@ -346,6 +346,21 @@ namespace LearnEasy
 
 		private void vacabularyToolStripMenuItem_Click(object sender, EventArgs e)
 		{
+			if (ResultGraphs != null)
+			{
+				ResultGraphs.Hide();
+			}
+			if (GamesList != null && WichGraphDate != null)
+			{
+				WichGraphDate.Hide();
+				GamesList.Hide();
+			}
+			if (Gr != null && GroupsList != null && Vac != null)
+			{
+				Gr.Hide();
+				GroupsList.Hide();
+				Vac.Hide();
+			}
 			if (Gr != null)
 			{
 				Gr.Hide();
