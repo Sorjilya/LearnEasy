@@ -80,8 +80,10 @@
       <DependentUpon>Form1.cs</DependentUpon>
     </Compile>
     <Compile Include="JsonConverter.cs" />
+    <Compile Include="JsonScores.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Results.cs" />
     <Compile Include="ToggleButton .cs">
       <SubType>Component</SubType>
     </Compile>

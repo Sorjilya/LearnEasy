@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Security.Cryptography;
+using System.Drawing.Drawing2D;
 
 namespace LearnEasy
 {
@@ -26,6 +27,8 @@ namespace LearnEasy
 		ComboBox groupWordLanBox;
 		ComboBox FromLanBox;
 		ComboBox ToLanBox;
+		ComboBox WichGraphDate;
+		PictureBox ResultGraphs;
 		Form AddWord;
 		Form AddGroup;
 		Form DeleteWord;
@@ -39,6 +42,7 @@ namespace LearnEasy
 		ComboBox MatchesGroupBox;
 		ComboBox MatchesDifficultyBox;
 		ListBox GroupsList;
+		ListBox GamesList;
 		Label Gr;
 		Label MatchesPoints;
 		Label Difficultylabel;
@@ -47,7 +51,9 @@ namespace LearnEasy
 		List<DoubleWord> WordsForMatches;
 		List<ToggleButton> MatchesButtons;
 		JsonWordsFile VacabularyFile = new JsonWordsFile();
+		JsonScores ResultsFile = new JsonScores();
 		List<Word> Vacabulary = new List<Word>();
+		List<Results> Scores = new List<Results>();
 		List<string> groups = new List<string>();
 		string From = "ru";
 		string To = "eng";
@@ -59,12 +65,25 @@ namespace LearnEasy
 		{
 			VacabularyFile.SetPath("");
 			VacabularyFile.SetName("words.json");
+			ResultsFile.SetPath("");
+			ResultsFile.SetName("res.json");
 			Vacabulary = VacabularyFile.LoadFromFile();
 			for(int i = 0; i < Vacabulary.Count; i++)
 			{
 				if (!groups.Contains(Vacabulary[i].Group))
 				{
 					groups.Add(Vacabulary[i].Group);
+				}
+			}
+			Scores = ResultsFile.LoadFromFile();
+			for (int i = 0; i < Scores.Count; i++)
+			{
+				if (Scores[i].GameName == "Matches")
+				{
+					if(Scores[i].score > maxmatchesPoints)
+					{
+						maxmatchesPoints = Scores[i].score;
+					}
 				}
 			}
 			InitializeComponent();
@@ -955,6 +974,13 @@ namespace LearnEasy
 		}
 		void EndGameMatches()
 		{
+			Results res = new Results();
+			res.score = matchPoints;
+			res.GameName = "Matches";
+			res.data = DateTime.Now;
+			List<Results> r = new List<Results>();
+			r.Add(res);
+			ResultsFile.SaveToFile(r);
 			MatchesGameForm.Hide();
 			MatchesBar.Value = 0;
 			timer1.Enabled = false;
@@ -1008,6 +1034,7 @@ namespace LearnEasy
 			endMatchesForm.Controls.Add(cancelButton);
 			endMatchesForm.Show();
 			matchPoints = 0;
+
 		}
 
 		private void MatchesExit(object sender, EventArgs e)
@@ -1032,6 +1059,141 @@ namespace LearnEasy
 				EndGameMatches();
 			}
 			matchTimer ++;
+		}
+
+		private void statistiksToolStripMenuItem_Click(object sender, EventArgs e)
+		{
+			if (GamesList != null && WichGraphDate != null)
+			{
+				WichGraphDate.Hide();
+				GamesList.Hide();
+			}
+			if (Gr != null && GroupsList != null && Vac != null)
+			{
+				Gr.Hide();
+				GroupsList.Hide();
+				Vac.Hide();
+			}
+			WichGraphDate = new ComboBox();
+			WichGraphDate.Location = new Point(Form1.ActiveForm.Width / 20, 4*Form1.ActiveForm.Height / 9);
+			WichGraphDate.Size = new Size(Form1.ActiveForm.Width / 5, Form1.ActiveForm.Height / 6);
+			WichGraphDate.Items.Add("Last Week");
+			WichGraphDate.Items.Add("Last Mounth");
+			WichGraphDate.Items.Add("All Time");
+			WichGraphDate.SelectedIndexChanged += GamesList_SelectedIndexChanged;
+			WichGraphDate.Font = new Font("Arial", Form1.ActiveForm.Height / 30);
+			WichGraphDate.BackColor = Color.FromArgb(150, 200, 80);
+			WichGraphDate.SelectedIndex = 0;
+			GamesList = new ListBox();
+			GamesList.Location = new Point(Form1.ActiveForm.Width/20, Form1.ActiveForm.Height/9);
+			GamesList.Size = new Size(Form1.ActiveForm.Width / 5, 3*Form1.ActiveForm.Height/12);
+			GamesList.ItemHeight = Form1.ActiveForm.Height / 12;
+			GamesList.Items.Add("Matches");
+			GamesList.Items.Add("Cards");
+			GamesList.Items.Add("Spelling");
+			GamesList.BackColor = Color.FromArgb(150, 200, 80);
+			GamesList.SelectedIndexChanged += GamesList_SelectedIndexChanged;
+			GamesList.Font = new Font("Arial", Form1.ActiveForm.Height/30);
+			GamesList.SelectedIndex = 0;
+			this.Controls.Add(GamesList);
+			this.Controls.Add(WichGraphDate);
+		}
+
+		private void GamesList_SelectedIndexChanged(object sender, EventArgs e)
+		{
+			if (ResultGraphs != null)
+			{
+				ResultGraphs.Hide();
+			}
+			ResultGraphs = new PictureBox();
+			ResultGraphs.Size = new Size(5 * Form1.ActiveForm.Width / 9, 2 * Form1.ActiveForm.Height / 3);
+			ResultGraphs.Location = new Point(Form1.ActiveForm.Width / 3, Form1.ActiveForm.Height / 9);
+			ResultGraphs.Paint += DrawGraph;
+			ResultGraphs.BackColor = Color.White;
+			this.Controls.Add(ResultGraphs);
+		}
+		TimeSpan GetMaxDateDifference(List<Results> results)
+		{
+			TimeSpan maxDifference = TimeSpan.Zero;
+
+			// Вычисляем разницу между соседними элементами
+			for (int i = 1; i < results.Count; i++)
+			{
+				TimeSpan difference = results[i].data - results[i - 1].data;
+				if (difference > maxDifference)
+				{
+					maxDifference = difference;
+				}
+			}
+
+			return maxDifference;
+		}
+
+		private void DrawGraph(object sender, PaintEventArgs e)
+		{
+			Scores = ResultsFile.LoadFromFile();
+			List<Results> Neededres = new List<Results>();
+			int maxSc = 0;
+
+			for (int i = 0; i < Scores.Count; i++)
+			{
+				if(Scores[i].GameName == (string)GamesList.SelectedItem)
+				{
+					if(WichGraphDate.SelectedIndex == 0)
+					{
+						if(DateTime.Now < Scores[i].data.AddDays(7))
+						{
+							Neededres.Add(Scores[i]);
+							if(maxSc < Scores[i].score)
+							{
+								maxSc = Scores[i].score;
+							}
+						}
+					}
+					if (WichGraphDate.SelectedIndex == 1)
+					{
+						if (DateTime.Now < Scores[i].data.AddDays(31))
+						{
+							Neededres.Add(Scores[i]);
+							if (maxSc < Scores[i].score)
+							{
+								maxSc = Scores[i].score;
+							}
+						}
+					}
+					else if (WichGraphDate.SelectedIndex == 2)
+					{
+						Neededres.Add(Scores[i]);
+						if (maxSc < Scores[i].score)
+						{
+							maxSc = Scores[i].score;
+						}
+					}
+				}
+			}
+			Pen arrowPen = new Pen(Color.Black, ResultGraphs.Width/200);
+			//arrowPen.EndCap = System.Drawing.Drawing2D.LineCap.ArrowAnchor;
+			AdjustableArrowCap bigArrow = new AdjustableArrowCap((int)Math.Log(ResultGraphs.Width), (int)Math.Log(ResultGraphs.Width)); // ширина и высота наконечника
+			arrowPen.CustomEndCap = bigArrow;
+			e.Graphics.DrawLine(arrowPen, ResultGraphs.Width / 30, 29 * ResultGraphs.Height / 30, ResultGraphs.Width / 30, 0);
+			e.Graphics.DrawLine(arrowPen, ResultGraphs.Width / 30, 29 * ResultGraphs.Height / 30, ResultGraphs.Width, 29 * ResultGraphs.Height / 30);
+			if (Neededres.Count > 0)
+			{
+				Pen BPen = new Pen(Color.Black, ResultGraphs.Width / 250);
+				Neededres.Sort((r1, r2) => r1.data.CompareTo(r2.data));
+				double maxTimeDif = GetMaxDateDifference(Neededres).TotalMilliseconds;
+				double fullDif = (Neededres[Neededres.Count - 1].data - Neededres[0].data).TotalMilliseconds;
+				double promez = ResultGraphs.Width / 30.0 * 28.0 / (Neededres.Count - 1);
+				int maxh = 29 * ResultGraphs.Height / 30;
+				Point lastP = new Point(ResultGraphs.Width / 30, maxh - (int)(Neededres[0].score * 0.9 / maxSc * maxh));
+				for (int i = 1; i < Neededres.Count; i++)
+				{
+					double bd = (Neededres[i].data - Neededres[i - 1].data).TotalMilliseconds;
+					Point Poi = new Point((int)(lastP.X + ResultGraphs.Width / 30.0 * 28.0 * bd / fullDif), maxh - (int)(Neededres[i].score * 0.9 / maxSc * maxh));
+					e.Graphics.DrawLine(BPen, lastP, Poi);
+					lastP = Poi;
+				}
+			}
 		}
 	}
 }

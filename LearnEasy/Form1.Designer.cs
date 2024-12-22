@@ -158,19 +158,20 @@ namespace LearnEasy
 			// languageToolStripMenuItem
 			// 
 			this.languageToolStripMenuItem.Name = "languageToolStripMenuItem";
-			this.languageToolStripMenuItem.Size = new System.Drawing.Size(138, 22);
+			this.languageToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
 			this.languageToolStripMenuItem.Text = "Language";
 			// 
 			// statistiksToolStripMenuItem
 			// 
 			this.statistiksToolStripMenuItem.Name = "statistiksToolStripMenuItem";
-			this.statistiksToolStripMenuItem.Size = new System.Drawing.Size(138, 22);
+			this.statistiksToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
 			this.statistiksToolStripMenuItem.Text = "Statistics";
+			this.statistiksToolStripMenuItem.Click += new System.EventHandler(this.statistiksToolStripMenuItem_Click);
 			// 
 			// lanFromtoToolStripMenuItem
 			// 
 			this.lanFromtoToolStripMenuItem.Name = "lanFromtoToolStripMenuItem";
-			this.lanFromtoToolStripMenuItem.Size = new System.Drawing.Size(138, 22);
+			this.lanFromtoToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
 			this.lanFromtoToolStripMenuItem.Text = "Lan from-to";
 			this.lanFromtoToolStripMenuItem.Click += new System.EventHandler(this.lanFromtoToolStripMenuItem_Click);
 			// 
