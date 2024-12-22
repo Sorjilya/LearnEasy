@@ -1,0 +1,626 @@
+[
+  {
+    "Words": [
+      {
+        "Word": "слышимый",
+        "Lan": "ru"
+      },
+      {
+        "Word": "audible",
+        "Lan": "eng"
+      }
+    ],
+    "Group": "Glossary"
+  },
+  {
+    "Words": [
+      {
+        "Word": "разряженность",
+        "Lan": "ru"
+      },
+      {
+        "Word": "rarefaction",
+        "Lan": "eng"
+      }
+    ],
+    "Group": "Glossary"
+  },
+  {
+    "Words": [
+      {
+        "Word": "наложение",
+        "Lan": "ru"
+      },
+      {
+        "Word": "ovetlap",
+        "Lan": "eng"
+      }
+    ],
+    "Group": "Glossary"
+  },
+  {
+    "Words": [
+      {
+        "Word": "маятник",
+        "Lan": "ru"
+      },
+      {
+        "Word": "pendulum",
+        "Lan": "eng"
+      }
+    ],
+    "Group": "Glossary"
+  },
+  {
+    "Words": [
+      {
+        "Word": "жесткость",
+        "Lan": "ru"
+      },
+      {
+        "Word": "stiffness",
+        "Lan": "eng"
+      }
+    ],
+    "Group": "Glossary"
+  },
+  {
+    "Words": [
+      {
+        "Word": "сжатие",
+        "Lan": "ru"
+      },
+      {
+        "Word": "compress",
+        "Lan": "eng"
+      }
+    ],
+    "Group": "Glossary"
+  },
+  {
+    "Words": [
+      {
+        "Word": "подвеграть действию",
+        "Lan": "ru"
+      },
+      {
+        "Word": "expose",
+        "Lan": "eng"
+      }
+    ],
+    "Group": "Glossary"
+  },
+  {
+    "Words": [
+      {
+        "Word": "скрытая теплота",
+        "Lan": "ru"
+      },
+      {
+        "Word": "latent heat",
+        "Lan": "eng"
+      }
+    ],
+    "Group": "Glossary"
+  },
+  {
+    "Words": [
+      {
+        "Word": "удельная теплоемкость",
+        "Lan": "ru"
+      },
+      {
+        "Word": "specific heat",
+        "Lan": "eng"
+      }
+    ],
+    "Group": "Glossary"
+  },
+  {
+    "Words": [
+      {
+        "Word": "внутренняя энергия",
+        "Lan": "ru"
+      },
+      {
+        "Word": "internal energy",
+        "Lan": "eng"
+      }
+    ],
+    "Group": "Glossary"
+  },
+  {
+    "Words": [
+      {
+        "Word": "поверхностное натяжение",
+        "Lan": "ru"
+      },
+      {
+        "Word": "surface tention",
+        "Lan": "eng"
+      }
+    ],
+    "Group": "Glossary"
+  },
+  {
+    "Words": [
+      {
+        "Word": "плотность",
+        "Lan": "ru"
+      },
+      {
+        "Word": "density",
+        "Lan": "eng"
+      }
+    ],
+    "Group": "Glossary"
+  },
+  {
+    "Words": [
+      {
+        "Word": "твердое тело",
+        "Lan": "ru"
+      },
+      {
+        "Word": "solid",
+        "Lan": "eng"
+      }
+    ],
+    "Group": "Glossary"
+  },
+  {
+    "Words": [
+      {
+        "Word": "угловое ускорение",
+        "Lan": "ru"
+      },
+      {
+        "Word": "angular acceleration",
+        "Lan": "eng"
+      }
+    ],
+    "Group": "Glossary"
+  },
+  {
+    "Words": [
+      {
+        "Word": "абсолютно твердый",
+        "Lan": "ru"
+      },
+      {
+        "Word": "rigid",
+        "Lan": "eng"
+      }
+    ],
+    "Group": "Glossary"
+  },
+  {
+    "Words": [
+      {
+        "Word": "момент силы",
+        "Lan": "ru"
+      },
+      {
+        "Word": "torque",
+        "Lan": "eng"
+      }
+    ],
+    "Group": "Glossary"
+  },
+  {
+    "Words": [
+      {
+        "Word": "фиктивные силы",
+        "Lan": "ru"
+      },
+      {
+        "Word": "fictitious forces",
+        "Lan": "eng"
+      }
+    ],
+    "Group": "Glossary"
+  },
+  {
+    "Words": [
+      {
+        "Word": "вторая космическая скорость",
+        "Lan": "ru"
+      },
+      {
+        "Word": "escapse speed",
+        "Lan": "eng"
+      }
+    ],
+    "Group": "Glossary"
+  },
+  {
+    "Words": [
+      {
+        "Word": "центробежная сила",
+        "Lan": "ru"
+      },
+      {
+        "Word": "centripetal force",
+        "Lan": "eng"
+      }
+    ],
+    "Group": "Glossary"
+  },
+  {
+    "Words": [
+      {
+        "Word": "круговое движение",
+        "Lan": "ru"
+      },
+      {
+        "Word": "circular motion",
+        "Lan": "eng"
+      }
+    ],
+    "Group": "Glossary"
+  },
+  {
+    "Words": [
+      {
+        "Word": "движитель",
+        "Lan": "ru"
+      },
+      {
+        "Word": "propulsion",
+        "Lan": "eng"
+      }
+    ],
+    "Group": "Glossary"
+  },
+  {
+    "Words": [
+      {
+        "Word": "преобразованная работа",
+        "Lan": "ru"
+      },
+      {
+        "Word": "energy conservation",
+        "Lan": "eng"
+      }
+    ],
+    "Group": "Glossary"
+  },
+  {
+    "Words": [
+      {
+        "Word": "трение покоя",
+        "Lan": "ru"
+      },
+      {
+        "Word": "static friction",
+        "Lan": "eng"
+      }
+    ],
+    "Group": "Glossary"
+  },
+  {
+    "Words": [
+      {
+        "Word": "трение",
+        "Lan": "ru"
+      },
+      {
+        "Word": "friction",
+        "Lan": "eng"
+      }
+    ],
+    "Group": "Glossary"
+  },
+  {
+    "Words": [
+      {
+        "Word": "система отсчета",
+        "Lan": "ru"
+      },
+      {
+        "Word": "reference frame",
+        "Lan": "eng"
+      }
+    ],
+    "Group": "Glossary"
+  },
+  {
+    "Words": [
+      {
+        "Word": "повышение",
+        "Lan": "ru"
+      },
+      {
+        "Word": "elevation",
+        "Lan": "eng"
+      }
+    ],
+    "Group": "Glossary"
+  },
+  {
+    "Words": [
+      {
+        "Word": "проэкционный",
+        "Lan": "ru"
+      },
+      {
+        "Word": "projectile",
+        "Lan": "eng"
+      }
+    ],
+    "Group": "Glossary"
+  },
+  {
+    "Words": [
+      {
+        "Word": "движение",
+        "Lan": "ru"
+      },
+      {
+        "Word": "motion",
+        "Lan": "eng"
+      }
+    ],
+    "Group": "Glossary"
+  },
+  {
+    "Words": [
+      {
+        "Word": "перемещение",
+        "Lan": "ru"
+      },
+      {
+        "Word": "displacment",
+        "Lan": "eng"
+      }
+    ],
+    "Group": "Glossary"
+  },
+  {
+    "Words": [
+      {
+        "Word": "скалярная скорость",
+        "Lan": "ru"
+      },
+      {
+        "Word": "speed",
+        "Lan": "eng"
+      }
+    ],
+    "Group": "Glossary"
+  },
+  {
+    "Words": [
+      {
+        "Word": "измерение",
+        "Lan": "ru"
+      },
+      {
+        "Word": "dimention",
+        "Lan": "eng"
+      }
+    ],
+    "Group": "Glossary"
+  },
+  {
+    "Words": [
+      {
+        "Word": "увеличение",
+        "Lan": "ru"
+      },
+      {
+        "Word": "increase",
+        "Lan": "eng"
+      }
+    ],
+    "Group": "Glossary"
+  },
+  {
+    "Words": [
+      {
+        "Word": "уменьшение",
+        "Lan": "ru"
+      },
+      {
+        "Word": "decrease",
+        "Lan": "eng"
+      }
+    ],
+    "Group": "Glossary"
+  },
+  {
+    "Words": [
+      {
+        "Word": "замедление",
+        "Lan": "ru"
+      },
+      {
+        "Word": "deceleration",
+        "Lan": "eng"
+      }
+    ],
+    "Group": "Glossary"
+  },
+  {
+    "Words": [
+      {
+        "Word": "ось",
+        "Lan": "ru"
+      },
+      {
+        "Word": "axis",
+        "Lan": "eng"
+      }
+    ],
+    "Group": "Glossary"
+  },
+  {
+    "Words": [
+      {
+        "Word": "средний",
+        "Lan": "ru"
+      },
+      {
+        "Word": "average",
+        "Lan": "eng"
+      }
+    ],
+    "Group": "Glossary"
+  },
+  {
+    "Words": [
+      {
+        "Word": "косинус",
+        "Lan": "ru"
+      },
+      {
+        "Word": "cosine",
+        "Lan": "eng"
+      }
+    ],
+    "Group": "Glossary"
+  },
+  {
+    "Words": [
+      {
+        "Word": "синус",
+        "Lan": "ru"
+      },
+      {
+        "Word": "sine",
+        "Lan": "eng"
+      }
+    ],
+    "Group": "Glossary"
+  },
+  {
+    "Words": [
+      {
+        "Word": "ускорение",
+        "Lan": "ru"
+      },
+      {
+        "Word": "acceleration",
+        "Lan": "eng"
+      }
+    ],
+    "Group": "Glossary"
+  },
+  {
+    "Words": [
+      {
+        "Word": "объём",
+        "Lan": "ru"
+      },
+      {
+        "Word": "volume",
+        "Lan": "eng"
+      }
+    ],
+    "Group": "Glossary"
+  },
+  {
+    "Words": [
+      {
+        "Word": "вектор скорости",
+        "Lan": "ru"
+      },
+      {
+        "Word": "velocity",
+        "Lan": "eng"
+      }
+    ],
+    "Group": "Glossary"
+  },
+  {
+    "Words": [
+      {
+        "Word": "сила",
+        "Lan": "ru"
+      },
+      {
+        "Word": "forse",
+        "Lan": "eng"
+      }
+    ],
+    "Group": "Glossary"
+  },
+  {
+    "Words": [
+      {
+        "Word": "СИ",
+        "Lan": "ru"
+      },
+      {
+        "Word": "SI",
+        "Lan": "eng"
+      }
+    ],
+    "Group": "Glossary"
+  },
+  {
+    "Words": [
+      {
+        "Word": "базовая единица измерения",
+        "Lan": "ru"
+      },
+      {
+        "Word": "fundamental unit",
+        "Lan": "eng"
+      }
+    ],
+    "Group": "Glossary"
+  },
+  {
+    "Words": [
+      {
+        "Word": "Величина",
+        "Lan": "ru"
+      },
+      {
+        "Word": "quantity",
+        "Lan": "eng"
+      }
+    ],
+    "Group": "Glossary"
+  },
+  {
+    "Words": [
+      {
+        "Word": "Испанский стыд",
+        "Lan": "ru"
+      },
+      {
+        "Word": "Kringe",
+        "Lan": "es"
+      }
+    ],
+    "Group": "memi"
+  },
+  {
+    "Words": [
+      {
+        "Word": "chill guy",
+        "Lan": "eng"
+      },
+      {
+        "Word": "спокойный парень",
+        "Lan": "ru"
+      }
+    ],
+    "Group": "memi"
+  },
+  {
+    "Words": [
+      {
+        "Word": "Cringe",
+        "Lan": "eng"
+      },
+      {
+        "Word": "Испанский стыд",
+        "Lan": "ru"
+      }
+    ],
+    "Group": "memi"
+  }
+]
