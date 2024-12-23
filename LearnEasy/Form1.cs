@@ -17,10 +17,16 @@ namespace LearnEasy
 		int matchTimer = 0;
 		int matchPoints = 0;
 		int maxmatchesPoints = 0;
+		int cardTimer = 0;
+		int cardPoints = 0;
+		int maxmcardsPoints = 0;
 		int dif = 1;
 		ProgressBar MatchesBar;
+		ProgressBar CardsBar;
 		Button StartMatchesButton;
+		Button EnterCard;
 		TextBox mainwordBox;
+		TextBox CardBox;
 		ComboBox mainWordLanBox;
 		TextBox secondwordBox;
 		ComboBox secondWordLanBox;
@@ -29,6 +35,7 @@ namespace LearnEasy
 		ComboBox ToLanBox;
 		ComboBox WichGraphDate;
 		PictureBox ResultGraphs;
+		Form CardsGameForm;
 		Form AddWord;
 		Form AddGroup;
 		Form DeleteWord;
@@ -39,15 +46,19 @@ namespace LearnEasy
 		TextBox GroupBox;
 		TextBox DelWordBox;
 		ComboBox DelGroupBox;
-		ComboBox MatchesGroupBox;
 		ComboBox MatchesDifficultyBox;
+		ComboBox MatchesGroupBox;
+		ComboBox CardsGroupBox;
 		ListBox GroupsList;
 		ListBox GamesList;
+		Label CardsGrouplabel;
 		Label Gr;
 		Label MatchesPoints;
 		Label Difficultylabel;
 		Label Grouplabel;
+		Label CardWord;
 		DataGridView Vac;
+		List<DoubleWord> WordsForCards;
 		List<DoubleWord> WordsForMatches;
 		List<ToggleButton> MatchesButtons;
 		JsonWordsFile VacabularyFile = new JsonWordsFile();
@@ -57,10 +68,6 @@ namespace LearnEasy
 		List<string> groups = new List<string>();
 		string From = "ru";
 		string To = "eng";
-		void refreshPage()
-		{
-			GroupsList.Hide();	
-		}
 		public Form1()
 		{
 			VacabularyFile.SetPath("");
@@ -83,6 +90,13 @@ namespace LearnEasy
 					if(Scores[i].score > maxmatchesPoints)
 					{
 						maxmatchesPoints = Scores[i].score;
+					}
+				}
+				if (Scores[i].GameName == "Cards")
+				{
+					if (Scores[i].score > maxmcardsPoints)
+					{
+						maxmcardsPoints = Scores[i].score;
 					}
 				}
 			}
@@ -783,6 +797,7 @@ namespace LearnEasy
 
 		private void StartMatches(object sender, EventArgs e)
 		{
+
 			StartMatchesButton.Hide();
 			MatchesDifficultyBox.Hide();
 			MatchesGroupBox.Hide();
@@ -833,43 +848,82 @@ namespace LearnEasy
 				}
 			}
 		}
+		void CreateCardsList()
+		{
+			WordsForCards = new List<DoubleWord>();
+			for (int i = 0; i < Vacabulary.Count; i++)
+			{
+				if (Vacabulary[i].Group == CardsGroupBox.Text)
+				{
+					string f = "";
+					string s = "";
+					for (int j = 0; j < Vacabulary[i].Words.Count; j++)
+					{
+						if (Vacabulary[i].Words[j].Lan == From)
+						{
+							f = Vacabulary[i].Words[j].Word;
+						}
+						if (Vacabulary[i].Words[j].Lan == To)
+						{
+							s = Vacabulary[i].Words[j].Word;
+						}
+					}
+					if (f != "" && s != "")
+					{
+						DoubleWord temp = new DoubleWord();
+						temp.firstWord = f;
+						temp.secondWord = s;
+						WordsForCards.Add(temp);
+					}
+				}
+			}
+		}
 		private void MatchesGame(object sender, EventArgs e)
 		{
-			dif = MatchesDifficultyBox.SelectedIndex + 1;
-			ToggleButton w11 = CreateToggleMatch(MatchesGameForm.Width / 5, MatchesGameForm.Height / 7, 0);
-			ToggleButton w12 = CreateToggleMatch(MatchesGameForm.Width / 5, MatchesGameForm.Height / 7*3, 100);
-			ToggleButton w13 = CreateToggleMatch(MatchesGameForm.Width / 5, MatchesGameForm.Height / 7*5, 200);
-			ToggleButton w21 = CreateToggleMatch(MatchesGameForm.Width / 5*3, MatchesGameForm.Height / 7, 300);
-			ToggleButton w22 = CreateToggleMatch(MatchesGameForm.Width / 5*3, MatchesGameForm.Height / 7*3, 400);
-			ToggleButton w23 = CreateToggleMatch(MatchesGameForm.Width / 5*3, MatchesGameForm.Height / 7*5, 500);
-			MatchesPoints = new Label();
-			MatchesPoints.Font = new Font("Arial", MatchesGameForm.Size.Height / 42);
-			MatchesPoints.Text = "Points: " + matchPoints + "\nMaximum Points: " + maxmatchesPoints;
-			MatchesPoints.Location = new Point(MatchesGameForm.Width/2-MatchesGameForm.Width/10, MatchesGameForm.Height *8 / 10);
-			MatchesPoints.Size = new Size(MatchesGameForm.Width / 5, MatchesGameForm.Height / 10);
-			MatchesPoints.TextAlign = ContentAlignment.MiddleCenter;
-			MatchesGameForm.Controls.Add(MatchesPoints);
-			MatchesButtons = new List<ToggleButton>();
-			MatchesButtons.Add(w11);
-			MatchesButtons.Add(w12);
-			MatchesButtons.Add(w13);
-			MatchesButtons.Add(w21);
-			MatchesButtons.Add(w22);
-			MatchesButtons.Add(w23);
-			for(int i = 0; i < MatchesButtons.Count; i++)
-			{
-				MatchesGameForm.Controls.Add(MatchesButtons[i]);
-			}
-			MatchesBar = new ProgressBar();
-			MatchesBar.Location = new Point(MatchesGameForm.Width / 2 - MatchesGameForm.Width / 4, MatchesGameForm.Height / 20);
-			MatchesBar.Size = new Size(MatchesGameForm.Width / 2, MatchesGameForm.Height / 17);
-			MatchesBar.Value = 100;
-			MatchesBar.Maximum = 1000;
-			MatchesGameForm.Controls.Add(MatchesBar);
-			matchTimer = 0;
-			timer1.Enabled = true;
 			CreateMatchesList();
-			MatchesGameRound();
+			if (WordsForMatches.Count < 3)
+			{
+				MessageBox.Show("Not Enought Words in Group", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Error);
+				MatchesGameForm.Hide();
+			}
+			else
+			{
+				dif = MatchesDifficultyBox.SelectedIndex + 1;
+				ToggleButton w11 = CreateToggleMatch(MatchesGameForm.Width / 5, MatchesGameForm.Height / 7, 0);
+				ToggleButton w12 = CreateToggleMatch(MatchesGameForm.Width / 5, MatchesGameForm.Height / 7 * 3, 100);
+				ToggleButton w13 = CreateToggleMatch(MatchesGameForm.Width / 5, MatchesGameForm.Height / 7 * 5, 200);
+				ToggleButton w21 = CreateToggleMatch(MatchesGameForm.Width / 5 * 3, MatchesGameForm.Height / 7, 300);
+				ToggleButton w22 = CreateToggleMatch(MatchesGameForm.Width / 5 * 3, MatchesGameForm.Height / 7 * 3, 400);
+				ToggleButton w23 = CreateToggleMatch(MatchesGameForm.Width / 5 * 3, MatchesGameForm.Height / 7 * 5, 500);
+				MatchesPoints = new Label();
+				MatchesPoints.Font = new Font("Arial", MatchesGameForm.Size.Height / 42);
+				MatchesPoints.Text = "Points: " + matchPoints + "\nMaximum Points: " + maxmatchesPoints;
+				MatchesPoints.Location = new Point(MatchesGameForm.Width / 2 - MatchesGameForm.Width / 10, MatchesGameForm.Height * 8 / 10);
+				MatchesPoints.Size = new Size(MatchesGameForm.Width / 5, MatchesGameForm.Height / 10);
+				MatchesPoints.TextAlign = ContentAlignment.MiddleCenter;
+				MatchesGameForm.Controls.Add(MatchesPoints);
+				MatchesButtons = new List<ToggleButton>();
+				MatchesButtons.Add(w11);
+				MatchesButtons.Add(w12);
+				MatchesButtons.Add(w13);
+				MatchesButtons.Add(w21);
+				MatchesButtons.Add(w22);
+				MatchesButtons.Add(w23);
+				for (int i = 0; i < MatchesButtons.Count; i++)
+				{
+					MatchesGameForm.Controls.Add(MatchesButtons[i]);
+				}
+				MatchesBar = new ProgressBar();
+				MatchesBar.Location = new Point(MatchesGameForm.Width / 2 - MatchesGameForm.Width / 4, MatchesGameForm.Height / 20);
+				MatchesBar.Size = new Size(MatchesGameForm.Width / 2, MatchesGameForm.Height / 17);
+				MatchesBar.Value = 100;
+				MatchesBar.Maximum = 1000;
+				MatchesGameForm.Controls.Add(MatchesBar);
+				matchTimer = 0;
+				timer1.Enabled = true;
+				MatchesGameRound();
+			}
+
 		}
 		static List<int> GetUniqueRandomNumbersCSPRNG(int count, int min, int max)
 		{
@@ -1105,7 +1159,8 @@ namespace LearnEasy
 			GamesList.ItemHeight = Form1.ActiveForm.Height / 12;
 			GamesList.Items.Add("Matches");
 			GamesList.Items.Add("Cards");
-			GamesList.Items.Add("Spelling");
+			//GamesList.Items.Add("Spelling");
+
 			GamesList.BackColor = Color.FromArgb(150, 200, 80);
 			GamesList.SelectedIndexChanged += GamesList_SelectedIndexChanged;
 			GamesList.Font = new Font("Arial", Form1.ActiveForm.Height/30);
@@ -1209,6 +1264,243 @@ namespace LearnEasy
 					lastP = Poi;
 				}
 			}
+		}
+
+		private void cardsToolStripMenuItem_Click(object sender, EventArgs e)
+		{
+			CardsGameForm = new Form();
+			CardsGameForm.Size = new Size(Form1.ActiveForm.Width / 10 *7, Form1.ActiveForm.Height / 10 * 7);
+			CardsGameForm.BackColor = Color.FromArgb(167, 193, 133);
+			CardsGameForm.FormBorderStyle = FormBorderStyle.FixedSingle;
+			CardsGameForm.MaximizeBox = false;
+			CardsGameForm.MinimizeBox = false;
+			CardsGrouplabel = new Label();
+			CardsGrouplabel.Text = "Enter the group:";
+			CardsGrouplabel.Font = new Font("Arial", CardsGameForm.Size.Height / 30);
+			CardsGrouplabel.ForeColor = Color.White;
+			CardsGrouplabel.Location = new Point(CardsGameForm.Size.Height / 22, CardsGameForm.Size.Height / 22);
+			CardsGrouplabel.Size = new Size(CardsGameForm.Size.Width / 6, CardsGameForm.Size.Height / 18);
+			CardsGrouplabel.BackColor = Color.FromArgb(84, 130, 26);
+			CardsGameForm.Controls.Add(CardsGrouplabel);
+
+			CardsGroupBox = new ComboBox();
+			for (int i = 0; i < groups.Count; i++)
+			{
+				CardsGroupBox.Items.Add(groups[i]);
+			}
+			CardsGroupBox.Location = new Point(CardsGameForm.Size.Height / 22 + CardsGameForm.Size.Width / 5, CardsGameForm.Size.Height / 22);
+			CardsGroupBox.Size = new Size(CardsGameForm.Size.Width / 5, CardsGameForm.Size.Height / 10);
+			CardsGroupBox.Font = new Font("Arial", CardsGameForm.Size.Height / 30);
+			CardsGroupBox.BackColor = Color.FromArgb(167, 193, 133);
+			CardsGroupBox.SelectedIndex = 0;
+			CardsGameForm.Controls.Add(CardsGroupBox);
+			
+
+			StartMatchesButton = new Button();
+			StartMatchesButton.Text = "Start";
+			StartMatchesButton.Font = new Font("Arial", CardsGameForm.Size.Height / 30);
+			StartMatchesButton.ForeColor = Color.White;
+			StartMatchesButton.BackColor = ColorTranslator.FromHtml("#8BA76A");
+			StartMatchesButton.Location = new Point(CardsGameForm.Size.Width / 2 - CardsGameForm.Size.Width / 6, CardsGameForm.Size.Height - CardsGameForm.Size.Height / 2);
+			StartMatchesButton.Size = new Size(CardsGameForm.Size.Width / 3, CardsGameForm.Size.Height / 3);
+			StartMatchesButton.Click += StartCards;
+			StartMatchesButton.MouseEnter += CustomButton_MouseEnter;
+			StartMatchesButton.MouseLeave += CustomButton_MouseLeave;
+			StartMatchesButton.FlatStyle = FlatStyle.Flat;
+			StartMatchesButton.FlatAppearance.BorderSize = 0;
+			StartMatchesButton.FlatAppearance.MouseDownBackColor = ColorTranslator.FromHtml("#7A9C5E");
+			StartMatchesButton.FlatAppearance.MouseOverBackColor = ColorTranslator.FromHtml("#8BA76A");
+			CardsGameForm.Controls.Add(StartMatchesButton);
+			CardsGameForm.Show();
+		}
+		private void StartCards(object sender, EventArgs e)
+		{
+			CardsGroupBox.Hide();
+			StartMatchesButton.Hide();
+			CardsGrouplabel.Hide();
+
+			CardsGame();
+		}
+		void CardsGame()
+		{
+			if(CardWord != null)
+			{
+				CardWord.Hide();
+			}
+			if (CardBox != null)
+			{
+				CardBox.Hide();
+			}
+			if (EnterCard != null)
+			{
+				EnterCard.Hide();
+			}
+			if (CardsBar != null)
+			{
+				CardsBar.Hide();
+			}
+			timer2.Enabled = true;
+			cardTimer = 0;
+			CardsBar = new ProgressBar();
+			CardsBar.Location = new Point(CardsGameForm.Size.Width/2 - CardsGameForm.Size.Width / 3, CardsGameForm.Size.Height / 6 + 4 * CardsGameForm.Size.Height / 7);
+			CardsBar.Size = new Size(2 * CardsGameForm.Size.Width / 3, CardsGameForm.Size.Height / 10);
+			CardsBar.Value = 100;
+			CardsBar.Maximum = 1000;
+			CardsGameForm.Controls.Add(CardsBar);
+			CardWord = new Label();
+			CardWord.Font = new Font("Arial", CardsGameForm.Size.Height / 30);
+			CardWord.ForeColor = Color.White;
+			CardWord.BackColor = Color.FromArgb(92, 122, 48);
+			CardWord.TextAlign = ContentAlignment.MiddleCenter;
+			CardWord.Location = new Point(CardsGameForm.Size.Width / 2 - CardsGameForm.Size.Width / 6, CardsGameForm.Size.Height / 6);
+			CardWord.Size = new Size(CardsGameForm.Size.Width / 3, CardsGameForm.Size.Height / 7);
+			CardsGameForm.Controls.Add(CardWord);
+			CardBox = new TextBox();
+			CardBox.Font = new Font("Arial", CardsGameForm.Size.Height / 30);
+			CardBox.ForeColor = Color.Black;
+			CardBox.Location = new Point(CardsGameForm.Size.Width / 2 - CardsGameForm.Size.Width / 6, CardsGameForm.Size.Height / 6 + 2*CardsGameForm.Size.Height / 7);
+			CardBox.Size = new Size(CardsGameForm.Size.Width / 3, CardsGameForm.Size.Height / 7);
+			CardsGameForm.Controls.Add(CardBox);
+			EnterCard = new Button();
+			EnterCard.Text = "Enter";
+			EnterCard.Font = new Font("Arial", CardsGameForm.Size.Height / 30);
+			EnterCard.ForeColor = Color.White;
+			EnterCard.BackColor = ColorTranslator.FromHtml("#8BA76A");
+			EnterCard.Location = new Point(CardsGameForm.Size.Width / 2 - CardsGameForm.Size.Width / 10, CardsGameForm.Size.Height / 6 + 3 * CardsGameForm.Size.Height / 7);
+			EnterCard.Size = new Size(CardsGameForm.Size.Width / 5, CardsGameForm.Size.Height / 10);
+			EnterCard.Click += EnterWordInCards;
+			EnterCard.MouseEnter += CustomButton_MouseEnter;
+			EnterCard.MouseLeave += CustomButton_MouseLeave;
+			EnterCard.FlatStyle = FlatStyle.Flat;
+			EnterCard.FlatAppearance.BorderSize = 0;
+			EnterCard.FlatAppearance.MouseDownBackColor = ColorTranslator.FromHtml("#7A9C5E");
+			EnterCard.FlatAppearance.MouseOverBackColor = ColorTranslator.FromHtml("#8BA76A");
+			CardsGameForm.Controls.Add(EnterCard);
+			CreateCardsList();
+			List<int> ChosenWord = GetUniqueRandomNumbersCSPRNG(1, 0, WordsForCards.Count - 1);
+			CardWord.Text = WordsForCards[ChosenWord[0]].firstWord;
+		}
+		bool areEqual(string s1, string s2)
+		{
+			// Удаляем все пробелы из строк
+			s1 = s1.Trim();
+			s2 = s2.Trim();
+
+			// Сравниваем строки с учетом регистра
+			return s1.ToLower().Equals(s2.ToLower(), StringComparison.Ordinal);
+		}
+		private void EnterWordInCards(object sender, EventArgs e)
+		{
+			int a = 0;
+			for(int i = 0; i < WordsForCards.Count; i++)
+			{
+				if(WordsForCards[i].firstWord == CardWord.Text)
+				{
+					if(areEqual(CardBox.Text, WordsForCards[i].secondWord))
+					{
+						cardPoints += 100;
+						if(cardPoints > maxmcardsPoints)
+						{
+							maxmcardsPoints = cardPoints;
+						}
+						cardTimer = 0;
+						CardsGame();
+						break;
+					}
+					else
+					{
+						EndGameCards();
+					}
+				}
+			}
+		}
+		void EndGameCards()
+		{
+			Results res = new Results();
+			res.score = cardPoints;
+			res.GameName = "Cards";
+			res.data = DateTime.Now;
+			List<Results> r = new List<Results>();
+			r.Add(res);
+			ResultsFile.SaveToFile(r);
+			CardsGameForm.Hide();
+			CardsBar.Value = 0;
+			timer2.Enabled = false;
+			cardTimer = 0;
+			endMatchesForm = new Form();
+			endMatchesForm.Size = new Size(Form1.ActiveForm.Width / 10 * 4, Form1.ActiveForm.Height / 10 * 4);
+			endMatchesForm.BackColor = Color.FromArgb(167, 193, 133);
+			endMatchesForm.FormBorderStyle = FormBorderStyle.FixedSingle;
+			endMatchesForm.MaximizeBox = false;
+			endMatchesForm.MinimizeBox = false;
+			Label lb = new Label();
+			lb.Font = new Font("Arial", endMatchesForm.Size.Height / 15);
+			lb.Text = "Your Points: " + cardPoints + "\nMaximum Points: " + maxmcardsPoints;
+			lb.Location = new Point(endMatchesForm.Width / 2 - endMatchesForm.Width / 4, endMatchesForm.Height / 25);
+			lb.Size = new Size(endMatchesForm.Width / 2, endMatchesForm.Height / 2);
+			lb.TextAlign = ContentAlignment.MiddleCenter;
+			endMatchesForm.Controls.Add(lb);
+
+			Button addButton = new Button();
+			addButton.Text = "Retry";
+			addButton.Font = new Font("Arial", endMatchesForm.Size.Height / 15);
+			addButton.ForeColor = Color.White;
+			addButton.BackColor = ColorTranslator.FromHtml("#8BA76A");
+			addButton.Location = new Point(endMatchesForm.Width * 3 / 4 - endMatchesForm.Width / 8, endMatchesForm.Height * 15 / 20 - endMatchesForm.Height / 5);
+			addButton.Size = new Size(endMatchesForm.Width / 4, endMatchesForm.Height / 5);
+			addButton.Click += CardsRetry;
+			addButton.MouseEnter += CustomButton_MouseEnter;
+			addButton.MouseLeave += CustomButton_MouseLeave;
+			addButton.FlatStyle = FlatStyle.Flat;
+			addButton.FlatAppearance.BorderSize = 0;
+			addButton.FlatAppearance.BorderColor = ColorTranslator.FromHtml("#8BA76A");
+			addButton.FlatAppearance.MouseDownBackColor = ColorTranslator.FromHtml("#7A9C5E");
+			addButton.FlatAppearance.MouseOverBackColor = ColorTranslator.FromHtml("#8BA76A");
+			endMatchesForm.Controls.Add(addButton);
+
+			// Создание кнопки "Cancel"
+			Button cancelButton = new Button();
+			cancelButton.Text = "Exit";
+			cancelButton.Font = new Font("Arial", endMatchesForm.Size.Height / 15);
+			cancelButton.ForeColor = Color.White;
+			cancelButton.BackColor = ColorTranslator.FromHtml("#8BA76A");
+			cancelButton.Location = new Point(endMatchesForm.Width / 4 - endMatchesForm.Width / 8, endMatchesForm.Height * 15 / 20 - endMatchesForm.Height / 5);
+			cancelButton.Size = new Size(endMatchesForm.Width / 4, endMatchesForm.Height / 5);
+			cancelButton.Click += CardsExit;
+			cancelButton.MouseEnter += CustomButton_MouseEnter;
+			cancelButton.MouseLeave += CustomButton_MouseLeave;
+			cancelButton.FlatStyle = FlatStyle.Flat;
+			cancelButton.FlatAppearance.BorderSize = 0;
+			cancelButton.FlatAppearance.MouseDownBackColor = ColorTranslator.FromHtml("#7A9C5E");
+			cancelButton.FlatAppearance.MouseOverBackColor = ColorTranslator.FromHtml("#8BA76A");
+			endMatchesForm.Controls.Add(cancelButton);
+			endMatchesForm.Show();
+			cardPoints = 0;
+
+		}
+
+		private void CardsExit(object sender, EventArgs e)
+		{
+			endMatchesForm.Hide();
+		}
+
+		private void CardsRetry(object sender, EventArgs e)
+		{
+			endMatchesForm.Hide();
+			cardsToolStripMenuItem_Click(sender, e);
+		}
+
+		private void timer2_Tick(object sender, EventArgs e)
+		{
+			if ((1000 - cardTimer * 3 * dif) >= 0)
+			{
+				CardsBar.Value = (1000 - cardTimer * 3 * dif);
+			}
+			else
+			{
+				EndGameCards();
+			}
+			cardTimer++;
 		}
 	}
 }

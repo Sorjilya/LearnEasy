@@ -2,6 +2,19 @@
   {
     "Words": [
       {
+        "Word": "машина",
+        "Lan": "ru"
+      },
+      {
+        "Word": "car",
+        "Lan": "eng"
+      }
+    ],
+    "Group": "Group2"
+  },
+  {
+    "Words": [
+      {
         "Word": "слышимый",
         "Lan": "ru"
       },
@@ -583,44 +596,5 @@
       }
     ],
     "Group": "Glossary"
-  },
-  {
-    "Words": [
-      {
-        "Word": "Испанский стыд",
-        "Lan": "ru"
-      },
-      {
-        "Word": "Kringe",
-        "Lan": "es"
-      }
-    ],
-    "Group": "memi"
-  },
-  {
-    "Words": [
-      {
-        "Word": "chill guy",
-        "Lan": "eng"
-      },
-      {
-        "Word": "спокойный парень",
-        "Lan": "ru"
-      }
-    ],
-    "Group": "memi"
-  },
-  {
-    "Words": [
-      {
-        "Word": "Cringe",
-        "Lan": "eng"
-      },
-      {
-        "Word": "Испанский стыд",
-        "Lan": "ru"
-      }
-    ],
-    "Group": "memi"
   }
 ]

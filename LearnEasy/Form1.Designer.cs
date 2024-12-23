@@ -40,13 +40,13 @@ namespace LearnEasy
 			this.gamesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.matchesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.cardsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-			this.spellingToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.settingsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.languageToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.statistiksToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.lanFromtoToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.performanceCounter1 = new System.Diagnostics.PerformanceCounter();
 			this.timer1 = new System.Windows.Forms.Timer(this.components);
+			this.timer2 = new System.Windows.Forms.Timer(this.components);
 			this.menuStrip1.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.performanceCounter1)).BeginInit();
 			this.SuspendLayout();
@@ -120,8 +120,7 @@ namespace LearnEasy
 			// 
 			this.gamesToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.matchesToolStripMenuItem,
-            this.cardsToolStripMenuItem,
-            this.spellingToolStripMenuItem});
+            this.cardsToolStripMenuItem});
 			this.gamesToolStripMenuItem.Name = "gamesToolStripMenuItem";
 			this.gamesToolStripMenuItem.Size = new System.Drawing.Size(55, 20);
 			this.gamesToolStripMenuItem.Text = "Games";
@@ -129,21 +128,16 @@ namespace LearnEasy
 			// matchesToolStripMenuItem
 			// 
 			this.matchesToolStripMenuItem.Name = "matchesToolStripMenuItem";
-			this.matchesToolStripMenuItem.Size = new System.Drawing.Size(119, 22);
+			this.matchesToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
 			this.matchesToolStripMenuItem.Text = "Matches";
 			this.matchesToolStripMenuItem.Click += new System.EventHandler(this.matchesToolStripMenuItem_Click);
 			// 
 			// cardsToolStripMenuItem
 			// 
 			this.cardsToolStripMenuItem.Name = "cardsToolStripMenuItem";
-			this.cardsToolStripMenuItem.Size = new System.Drawing.Size(119, 22);
+			this.cardsToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
 			this.cardsToolStripMenuItem.Text = "Cards";
-			// 
-			// spellingToolStripMenuItem
-			// 
-			this.spellingToolStripMenuItem.Name = "spellingToolStripMenuItem";
-			this.spellingToolStripMenuItem.Size = new System.Drawing.Size(119, 22);
-			this.spellingToolStripMenuItem.Text = "Spelling";
+			this.cardsToolStripMenuItem.Click += new System.EventHandler(this.cardsToolStripMenuItem_Click);
 			// 
 			// settingsToolStripMenuItem
 			// 
@@ -158,20 +152,20 @@ namespace LearnEasy
 			// languageToolStripMenuItem
 			// 
 			this.languageToolStripMenuItem.Name = "languageToolStripMenuItem";
-			this.languageToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+			this.languageToolStripMenuItem.Size = new System.Drawing.Size(138, 22);
 			this.languageToolStripMenuItem.Text = "Language";
 			// 
 			// statistiksToolStripMenuItem
 			// 
 			this.statistiksToolStripMenuItem.Name = "statistiksToolStripMenuItem";
-			this.statistiksToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+			this.statistiksToolStripMenuItem.Size = new System.Drawing.Size(138, 22);
 			this.statistiksToolStripMenuItem.Text = "Statistics";
 			this.statistiksToolStripMenuItem.Click += new System.EventHandler(this.statistiksToolStripMenuItem_Click);
 			// 
 			// lanFromtoToolStripMenuItem
 			// 
 			this.lanFromtoToolStripMenuItem.Name = "lanFromtoToolStripMenuItem";
-			this.lanFromtoToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+			this.lanFromtoToolStripMenuItem.Size = new System.Drawing.Size(138, 22);
 			this.lanFromtoToolStripMenuItem.Text = "Lan from-to";
 			this.lanFromtoToolStripMenuItem.Click += new System.EventHandler(this.lanFromtoToolStripMenuItem_Click);
 			// 
@@ -179,6 +173,10 @@ namespace LearnEasy
 			// 
 			this.timer1.Interval = 20;
 			this.timer1.Tick += new System.EventHandler(this.timer1_Tick);
+			// 
+			// timer2
+			// 
+			this.timer2.Tick += new System.EventHandler(this.timer2_Tick);
 			// 
 			// Form1
 			// 
@@ -212,13 +210,13 @@ namespace LearnEasy
 		private System.Windows.Forms.ToolStripMenuItem gamesToolStripMenuItem;
 		private System.Windows.Forms.ToolStripMenuItem matchesToolStripMenuItem;
 		private System.Windows.Forms.ToolStripMenuItem cardsToolStripMenuItem;
-		private System.Windows.Forms.ToolStripMenuItem spellingToolStripMenuItem;
 		private System.Windows.Forms.ToolStripMenuItem settingsToolStripMenuItem;
 		private System.Windows.Forms.ToolStripMenuItem languageToolStripMenuItem;
 		private System.Windows.Forms.ToolStripMenuItem statistiksToolStripMenuItem;
 		private System.Windows.Forms.ToolStripMenuItem lanFromtoToolStripMenuItem;
 		private System.Diagnostics.PerformanceCounter performanceCounter1;
 		private System.Windows.Forms.Timer timer1;
+		private System.Windows.Forms.Timer timer2;
 	}
 }
 
