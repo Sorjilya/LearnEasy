@@ -1458,6 +1458,7 @@ namespace LearnEasy
 			addButton.FlatAppearance.MouseOverBackColor = ColorTranslator.FromHtml("#8BA76A");
 			endMatchesForm.Controls.Add(addButton);
 
+
 			// Создание кнопки "Cancel"
 			Button cancelButton = new Button();
 			cancelButton.Text = "Exit";
